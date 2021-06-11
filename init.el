@@ -11,7 +11,6 @@
 (require 'init-ibuffer)
 (set-language-environment "UTF-8")
 (global-set-key (kbd "M-1") 'delete-other-windows)
-(smooth-scrolling-mode 1)
 (global-anzu-mode +1)
 
 (global-aggressive-indent-mode 1)
@@ -32,6 +31,22 @@
 ;; or if you use desktop-save-mode
 ;; (add-to-list 'desktop-globals-to-save 'ivy-dired-history-variable)
 
+(use-package frog-jump-buffer
+  :ensure t
+  :bind ("M-e" . frog-jump-buffer)
+  )
+
+(use-package avy
+  :ensure t
+  :bind (("C-;" . avy-goto-char)
+	 ("C-'" . avy-goto-char-2)
+	 ("M-g f" . avy-goto-line)
+	 ("M-g w" . avy-goto-word-1)
+	 ("M-g e" . avy-goto-word-0))
+  )
+
+(add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
+
 
 (with-eval-after-load 'dired
   (require 'ivy-dired-history)
@@ -46,25 +61,10 @@
   :config (goto-last-point-mode))
 
 
-(require 'diminish)
-
-(diminish 'rainbow-mode)                                       ; Hide lighter from mode-line
-(diminish 'rainbow-mode " Rbow")                               ; Replace rainbow-mode lighter with " Rbow"
-(diminish 'rainbow-mode 'rainbow-mode-lighter)                 ; Use raingow-mode-lighter variable value
-(diminish 'rainbow-mode '(" " "R-" "bow"))                     ; Replace rainbow-mode lighter with " R-bow"
-(diminish 'rainbow-mode '((" " "R") "/" "bow"))                ; Replace rainbow-mode lighter with " R/bow"
-(diminish 'rainbow-mode '(:eval (format " Rbow/%s" (+ 2 3))))  ; Replace rainbow-mode lighter with " Rbow/5"
-(diminish 'rainbow-mode                                        ; Replace rainbow-mode lighter with greened " Rbow"
-	  '(:propertize " Rbow" face '(:foreground "green")))
-(diminish 'rainbow-mode                                        ; If rainbow-mode-mode-linep is non-nil " Rbow/t"
-	  '(rainbow-mode-mode-linep " Rbow/t" " Rbow/nil"))
-(diminish 'rainbow-mode '(3 " Rbow" "/" "s"))                  ; Replace rainbow-mode lighter with " Rb"
-
-
 ;; 展示目录
 (global-set-key (kbd "M-2") 'counsel-imenu)
 
-(global-set-key (kbd "`") 'keyboard-escape-quit)
+(global-set-key (kbd "M-c") 'keyboard-escape-quit)
 
 ;; which-key 和 window-numbering
 (which-key-mode 1)
@@ -145,7 +145,7 @@
 (global-set-key (kbd "C-h C-f") 'counsel-describe-function)
 (global-set-key (kbd "C-h C-v") 'counsel-describe-variable)
 (global-set-key (kbd "C-h C-k") 'find-function-on-key)
-(global-set-key (kbd "M-e") 'ibuffer)
+(global-set-key (kbd "C-<tab>") 'ibuffer)
 ;; helm-ag 高级搜索
 (global-set-key (kbd "C-S-s") 'helm-do-ag-project-root)
 
@@ -301,9 +301,10 @@
  '(centered-window-mode t)
  '(company-minimum-prefix-length 1)
  '(cwm-centered-window-width 135)
+ '(frog-jump-buffer-max-buffers 99)
  '(menu-bar-mode nil)
  '(package-selected-packages
-   '(company-statistics transient goto-last-change define-word goto-last-point ivy-dired-history dired-recent helm-company volatile-highlights aggressive-indent anzu smooth-scrolling diminish evil-tutor centered-window focus youdao-dictionary auto-yasnippet yasnippet-snippets yasnippet flycheck helm-ag iedit expand-region iflipb windswap smartparens doom-themes solarized-theme helm-themes dracula-theme spacemacs-theme company ansi shut-up epl git commander f pallet counsel swiper auctex)))
+   '(dumb-jump frog-jump-buffer company-statistics transient goto-last-change define-word goto-last-point ivy-dired-history dired-recent helm-company volatile-highlights aggressive-indent anzu diminish evil-tutor centered-window focus youdao-dictionary auto-yasnippet yasnippet-snippets yasnippet flycheck helm-ag iedit expand-region iflipb windswap smartparens doom-themes solarized-theme helm-themes dracula-theme spacemacs-theme company ansi shut-up epl git commander f pallet counsel swiper auctex)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
